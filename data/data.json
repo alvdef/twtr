@@ -1,0 +1,108 @@
+{
+    "lists":
+    {
+        "data": [
+            {
+                "id": "1566842355059154945",
+                "name": "Tecnologia"
+            },
+            {
+                "id": "1566842155594833922",
+                "name": "Deportes"
+            }
+        ],
+        "meta": {
+            "result_count": 2
+        }
+    },
+    "currentList": "1566842355059154945",
+    "tweets": 
+    {
+        "1566842355059154945":
+        {
+            "data": [
+                {
+                    "created_at": "2022-09-05T18:57:18.000Z",
+                    "author_id": "185408549",
+                    "text": "📌 Tenemos #FixtureHispano para nuestros desafíos durante el mes de septiembre y octubre. \n\nSeremos protagonistas en el #CampeonatoPlanVital y #CopaChileEasy 👏🏻🔴🟡 https://t.co/WHuz3goqnF",
+                    "id": "1566863058965708801"
+                },
+                {
+                    "created_at": "2022-09-05T18:28:06.000Z",
+                    "author_id": "185408549",
+                    "text": "Lunes superado ☑️\n\n💪🏻 Dejando todo en cada entrenamiento 🏋🏻‍♂️ https://t.co/YRRRjrdQiD",
+                    "id": "1566855710343696386"
+                },
+                {
+                    "created_at": "2022-09-05T18:28:01.000Z",
+                    "author_id": "376256489",
+                    "text": "¡¡¡VAMOOOOOS!!! 👏👏👏\n\n🔜A por las semifinales del Campeonato de Europa #WpSplit2022\n\nSois increíbles 🤯\n\n#Waterpolo #HacemosEquipo https://t.co/fv5i8nLnPb",
+                    "id": "1566855686243467267"
+                },
+                {
+                    "created_at": "2022-09-05T17:47:36.000Z",
+                    "author_id": "443680219",
+                    "text": "La historia detrás de esa frase. Qué historia. Vean este vídeo hasta el final \n\n@SteveKerr &amp; @manuginobili \n\n@spurs #ManuHOF  #22HoopClass https://t.co/NeOFvDzSL3",
+                    "id": "1566845517019201539"
+                },
+                {
+                    "created_at": "2022-09-05T17:45:40.000Z",
+                    "author_id": "443680219",
+                    "text": "¿Te acuerdas de este momento?\n\n #22HoopClass\n\n#ManuHOF https://t.co/pqJcZ1P3sU",
+                    "id": "1566845028550467584"
+                },
+                {
+                    "created_at": "2022-09-05T17:01:11.000Z",
+                    "author_id": "443680219",
+                    "text": "RT @NBAItalia: 𝔾 𝔸 ℝ ℝ 𝔸\n\n@manuginobili | @Hoophall https://t.co/tHhcrVMsMk",
+                    "id": "1566833836725620737"
+                },
+                {
+                    "created_at": "2022-09-05T16:36:14.000Z",
+                    "author_id": "443680219",
+                    "text": "🏀⚽️\n\n@CapelaClint &amp; @vinijr &amp; @edermilitao \n\n@ATLHawks &amp; @realmadriden https://t.co/DgxBs2YrYL",
+                    "id": "1566827556367749120"
+                },
+                {
+                    "created_at": "2022-09-05T16:13:08.000Z",
+                    "author_id": "185408549",
+                    "text": "🥇 𝐉𝐔𝐆𝐀𝐃𝐎𝐑 𝐃𝐄𝐋 𝐌𝐄𝐒 \n\n🗳 Los Hispanos votaron y eligieron a Jonathan Villagra como el jugador más destacado durante el mes de agosto.\n\n¡Felicidades, crack! 🔝 https://t.co/U7pI0rScUQ",
+                    "id": "1566821745369067520"
+                },
+                {
+                    "created_at": "2022-08-31T07:00:01.000Z",
+                    "author_id": "443680219",
+                    "text": "LeBron espera\n\nLeBron ataca #NBADefenseWeek https://t.co/boAELcLDKd",
+                    "id": "1564870608369750017"
+                }
+            ],
+            "includes": {
+                "users": [
+                    {
+                        "url": "https://t.co/GwphXl2r9c",
+                        "name": "Unión Española",
+                        "id": "185408549",
+                        "username": "UEoficial"
+                    },
+                    {
+                        "url": "https://t.co/GamM83oZcy",
+                        "name": "CSD",
+                        "id": "376256489",
+                        "username": "deportegob"
+                    },
+                    {
+                        "url": "https://t.co/1yoFCpzm8a",
+                        "name": "NBA Spain",
+                        "id": "443680219",
+                        "username": "NBAspain"
+                    }
+                ]
+            },
+            "meta": {
+                "result_count": 9,
+                "next_token": "7140dibdnow9c7btw4232pp07swnv6bdouarqsczwjinr"
+            }
+        }
+    },
+    "searchTerm": ""
+}

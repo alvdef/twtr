@@ -1,0 +1,25 @@
+.post-wrapper {
+    margin: var(--spacing-3);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.post-header {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#created_at {
+    float: left;
+    align-self: flex-end; 
+}
+
+
+
+.post-body {
+    margin-top: var(--spacing-1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

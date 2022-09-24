@@ -15,7 +15,7 @@ const Home = () => {
     const getUser = (tweet, users) => users.find(user => user.id === tweet.author_id);
 
     const tweets = listTweets.map((tweet, index) => 
-        <Row>
+        <Row >
             <Post 
                 key={index}
                 user={getUser(tweet, listUsers)}
@@ -26,7 +26,7 @@ const Home = () => {
 
 
     return (
-        <Container>
+        <Container fluid="sm">
             {tweets}
         </Container>
     )

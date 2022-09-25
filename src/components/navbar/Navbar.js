@@ -1,31 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineSearch, AiOutlineTwitter, AiOutlineClose } from 'react-icons/ai';
 import { BsList } from 'react-icons/bs'
 
 import './Navbar.css'
-import DATA from '../../data';
-
+import { 
+    fetchLists,
+    selectLists,
+} from '../../redux/listsSlice';
+import { 
+    selectSelectedList,
+    setSelectedList,
+    setSearchTerm
+} from '../../redux/tweetsSlice';
 
 
 
 const Navbar = () => {
 
-    // inicializa la lista como la lista inicial
-    const [selectedList, setSelectedList] = useState(DATA.lists.data[0])
+    const dispatch = useDispatch();
+    const lists = useSelector(selectLists);
+    const selectedList = useSelector(selectSelectedList);
+
     const [searchTermLocal, setSearchTermLocal] = useState('');
+
+    useEffect(() => {
+        dispatch(fetchLists());
+    }, [dispatch])
 
     const onSearchTermChange = (e) => {
         setSearchTermLocal(e.target.value);
-    }
+    };
 
     const onSearchTermSubmit = (e) => {
-
-    }
-
+        setSearchTerm(searchTermLocal);
+    };
 
     return (
         <nav className='navbar'>
             <ListsSidebar 
+                lists={lists}
                 selectedList={selectedList} 
                 setSelectedList={setSelectedList} 
             />
@@ -49,12 +63,11 @@ const Navbar = () => {
     );
 }
 
-const ListsSidebar = ({ selectedList, setSelectedList }) => {
+const ListsSidebar = ({ lists, selectedList, setSelectedList }) => {
 
     const [sidebar, setSidebar] = useState(false);
 
     const toggleSidebar = () => setSidebar(!sidebar);
-    
 
     return(
         <>
@@ -65,11 +78,11 @@ const ListsSidebar = ({ selectedList, setSelectedList }) => {
                     className='sidenav-item toggle close' 
                     onClick={toggleSidebar}
                 /></li>
-                {DATA.lists.data.map((list, index) => (
+                {lists.data.map((list, index) => (
                     <li 
                         key={index}
                         className={list === selectedList ? 'sidenav-item text active' : 'sidenav-item text'}
-                        onClick={() => setSelectedList(list)}
+                        onClick={() => setSelectedList(list.id)}
                     >
                         <span >
                             {list.name}

@@ -33,7 +33,8 @@ const Navbar = () => {
     };
 
     const onSearchTermSubmit = (e) => {
-        setSearchTerm(searchTermLocal);
+        e.preventDefault();
+        dispatch(setSearchTerm(searchTermLocal));
     };
 
     return (
@@ -42,6 +43,7 @@ const Navbar = () => {
                 lists={lists}
                 selectedList={selectedList} 
                 setSelectedList={setSelectedList} 
+                dispatch={dispatch}
             />
             <span className='header'>
                 <AiOutlineTwitter size={40} />
@@ -63,7 +65,7 @@ const Navbar = () => {
     );
 }
 
-const ListsSidebar = ({ lists, selectedList, setSelectedList }) => {
+const ListsSidebar = ({ lists, selectedList, setSelectedList, dispatch }) => {
 
     const [sidebar, setSidebar] = useState(false);
 
@@ -74,15 +76,17 @@ const ListsSidebar = ({ lists, selectedList, setSelectedList }) => {
             <BsList className='sidenav-item toggle' onClick={toggleSidebar} />
 
             <ul className={sidebar ? 'sidenav-menu active' : 'sidenav-menu'}>
-                <li><AiOutlineClose 
-                    className='sidenav-item toggle close' 
-                    onClick={toggleSidebar}
-                /></li>
-                {lists.data.map((list, index) => (
+                <li>
+                    <AiOutlineClose 
+                        className='sidenav-item toggle close' 
+                        onClick={toggleSidebar}
+                    />
+                </li>
+                {lists.map((list, index) => (
                     <li 
                         key={index}
                         className={list === selectedList ? 'sidenav-item text active' : 'sidenav-item text'}
-                        onClick={() => setSelectedList(list.id)}
+                        onClick={() => dispatch(setSelectedList(parseInt(list.id)))}
                     >
                         <span >
                             {list.name}

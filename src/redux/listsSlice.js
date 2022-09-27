@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getLists } from '../../.netlify/functions/listsByUserId';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     lists: [],
@@ -16,9 +15,10 @@ const listsSlice = createSlice({
             state.error = false;
             state.isLoading = true;
         },
-        getListsSuccess(state) {
+        getListsSuccess(state, action) {
             state.error = false;
             state.isLoading = false;
+            state.lists = action.payload
         },
         getListsFailed(state) {
             state.error = true;
@@ -42,8 +42,9 @@ export const fetchLists = () => async (dispatch) => {
     
     try {
         dispatch(startGetLists());
-        const lists = await fetch(url).then((res) => res.json());
-        dispatch(getListsSuccess());
+        // const lists = await fetch(url).then((res) => res.json());
+        const lists = await fetch(url).then((res) => console.log(res));
+        dispatch(getListsSuccess(lists.data));
     } catch (err) {
         dispatch(getListsFailed());
     }

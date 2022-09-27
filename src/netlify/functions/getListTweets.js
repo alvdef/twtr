@@ -1,12 +1,11 @@
 const axios = require("axios");
 
-const token = process.env.BEARER_TOKEN;
-
-
 exports.handler = async function (event, context) {
-
-    const { listId } = event.queryStringParameters;
+    console.log(event);
+    console.lot(context);    
     
+    const token = process.env.BEARER_TOKEN;
+    const { listId } = event.queryStringParameters;
     const endpointURL = `https://api.twitter.com/2/lists/${listId}/tweets`;
 
     try {

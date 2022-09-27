@@ -6,35 +6,21 @@ import Container from 'react-bootstrap/Container'
 
 import Post from '../post/Post'
 import { 
-    fetchPOSTS, 
-    selectListUsers,
-    selectFilteredPosts 
+    fetchPosts, 
+    selectFilteredPosts,
+    setSearchTerm
 } from '../../redux/tweetsSlice'
 
 
 const Home = () => {
-    const dispatch = useDispatch();
-
     const tweets = useSelector(state => state.tweets);
     const { isLoading, error, searchTerm, selectedList } = tweets;
-    const users = useSelector(selectListUsers)
     const posts = useSelector(selectFilteredPosts);
 
+    const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchPOSTS(selectedList));
+        dispatch(fetchPosts(selectedList));
     }, [selectedList])
-
-    const getUser = (tweet, users) => users.find(user => user.id === tweet.author_id);
-
-    const postsContainer = posts.map((tweet, index) => 
-        <Row >
-            <Post 
-                key={index}
-                user={getUser(tweet, users)}
-                tweet={tweet}
-            />
-        </Row>
-    );
 
     if (isLoading) {
         return (
@@ -50,7 +36,7 @@ const Home = () => {
                 <h2>Failed to load posts.</h2>
                 <button
                     type="button"
-                    onClick={() => dispatch(fetchPosts(selectedSubreddit))}
+                    onClick={() => dispatch(fetchPosts(selectedList))}
                 >
                 Try again
                 </button>
@@ -71,9 +57,17 @@ const Home = () => {
         );
     }
     else {
+        console.log(posts);
         return (
             <Container fluid="sm">
-                {postsContainer}
+                {posts.map((tweet, index) => 
+                    <Row >
+                        <Post 
+                            key={index}
+                            tweet={tweet}
+                        />
+                    </Row>
+                )}
             </Container>
         )
     }

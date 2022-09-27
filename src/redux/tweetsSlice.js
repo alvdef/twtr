@@ -13,39 +13,45 @@ const tweetsSlice = createSlice({
     name: 'tweets',
     initialState,
     reducers: {
-        // POSTS
-        // prescindible?
-        setPosts(state, action) {
-            state.posts = action.payload;
-        },
-        startGetPosts(state) {
+        startGetPosts: (state) => {
             state.isLoading = true;
             state.error = false;
         },
-        getPostsSuccess(state, action) {
+        getPostsSuccess: (state, action) => {
             state.isLoading = false;
             state.error = false;
-            state.posts = action.payload
+
+            // posts contains the tweet object including a property "user"
+            const posts = action.payload.tweets.forEach(tweet => {
+                // search the user that published "tweet"
+                const user = action.payload.users.find(
+                    user => user.id === tweet.author_id
+                );
+                Object.defineProperty(tweet, 'user', user);
+                return tweet;
+            });
+            // posts
+            Object.defineProperties(
+                state.posts, action.payload.list, posts
+            );
+            
         },
-        getPostsFailed(state) {
+        getPostsFailed: (state) => {
             state.isLoading = false;
             state.error = true;
         },
         // SEARCH TERM
-        setSearchTerm(state, action) {
+        setSearchTerm: (state, action) => {
             state.searchTerm = action.payload;
         },
-        setSelectedList(state, action) {
+        setSelectedList: (state, action) => {
             state.selectedList = action.payload;
             state.searchTerm = '';
         },
-        
-        // profile info
     }
 })
 
 export const {
-    setPosts,
     startGetPosts,
     getPostsSuccess,
     getPostsFailed,
@@ -56,23 +62,27 @@ export const {
 export default tweetsSlice.reducer;
 
 
-export const fetchPOSTS = (list) => async (dispatch) => {
+export const fetchPosts = (list) => async (dispatch) => {
     const url = `/.netlify/functions/getListTweets?listId=${list.id}`;
 
     try {
         dispatch(startGetPosts());
-        const posts = await fetch(url).then((res) => res.json());
-        dispatch(getPostsSuccess(posts));
+        const listTweets = await fetch(url)
+        .then(res => {
+            // converts into string, then to js object (problems with \n character)
+            return JSON.parse(JSON.stringify(res));
+        });
+        
+        const tweets = listTweets.data;
+        const users = listTweets.includes.users;
+        dispatch(getPostsSuccess(list, tweets, users));
     } catch (err) {
         dispatch(getPostsFailed())
     }
 }
 
-
 export const selectSelectedList = (state) => state.tweets.selectedList;
-export const selectListUsers = (state) => state.tweets.posts[selectedList].users;
-
-const selectListPosts = (state) => state.tweets.posts[selectedList].data;
+const selectListPosts = (state) => state.tweets.posts;
 const selectSearchTerm = (state) => state.searchTerm;
 
 export const selectFilteredPosts = createSelector(
@@ -85,4 +95,4 @@ export const selectFilteredPosts = createSelector(
         }
         return posts;
     }
-)
+);

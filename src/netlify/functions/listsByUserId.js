@@ -1,13 +1,12 @@
 const axios = require("axios");
 
-
-
-
-exports.handler = async function (event, conntext) {
+exports.handler = async function (event, context) {
+    console.log(event);
+    console.lot(context);    
 
     const userId = '1566757431413293057';
     const token = process.env.BEARER_TOKEN;
-    const endpointURL = `https://api.twitter.com/2/users/${id}/owned_lists`;
+    const endpointURL = `https://api.twitter.com/2/users/${userId}/owned_lists`;
  
     try {
         const res = await axios.get(endpointURL, {

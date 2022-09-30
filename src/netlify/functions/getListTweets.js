@@ -4,7 +4,7 @@ exports.handler = async function (event, context) {
     console.log(event);
     console.lot(context);    
     
-    const token = process.env.BEARER_TOKEN;
+    const token = process.env.bearer_token;
     const { listId } = event.queryStringParameters;
     const endpointURL = `https://api.twitter.com/2/lists/${listId}/tweets`;
 

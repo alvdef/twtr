@@ -20,8 +20,22 @@ exports.handler = async function (event, context) {
         }
     } catch (err) {
         return {
-            statusCode: 404,
-            body: err.toString(),
+            statusCode: 400,
+            body: {
+                "data": [
+                    {
+                        "id": "1566842355059154945",
+                        "name": "Tecnologia"
+                    },
+                    {
+                        "id": "1566842155594833922",
+                        "name": "Deportes"
+                    }
+                ],
+                "meta": {
+                    "result_count": 2
+                }
+            }
         }
     }
 }

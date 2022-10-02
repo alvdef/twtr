@@ -63,7 +63,7 @@ export default tweetsSlice.reducer;
 
 
 export const fetchPosts = (list) => async (dispatch) => {
-    const url = `/.netlify/functions/getListTweets?listId=${list.id}`;
+    const url = `/netlify/functions/getListTweets?listId=${list.id}`;
 
     try {
         dispatch(startGetPosts());

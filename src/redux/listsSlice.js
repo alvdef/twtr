@@ -38,12 +38,11 @@ export default listsSlice.reducer;
 
 // This is a Redux Thunk that gets lists from a user.
 export const fetchLists = () => async (dispatch) => {
-    const url = `/.netlify/functions/listsByUserId`;
+    const url = `/netlify/functions/listsByUserId`;
     
     try {
         dispatch(startGetLists());
-        // const lists = await fetch(url).then((res) => res.json());
-        const lists = await fetch(url).then((res) => console.log(res));
+        const lists = await fetch(url).then((res) => res.json());
         dispatch(getListsSuccess(lists.data));
     } catch (err) {
         dispatch(getListsFailed());

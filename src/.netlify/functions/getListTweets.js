@@ -20,9 +20,15 @@ exports.handler = async function (event, context) {
     });
 
     if (res.body) {
-        return res.body;
+        return {
+            statusCode: 200,
+            body: res.body
+        };
     }
     else {
-        throw new Error('Something went wrong');
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Something went wrong' })
+        };
     }
 }

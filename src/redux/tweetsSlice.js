@@ -1,4 +1,16 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { createSlice, createSelector, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const fetchPosts = createAsyncThunk(
+    'tweets/fetchPosts',
+    async (list) => {
+        const url = `/.netlify/functions/getListTweets?listId=${list.id}`;
+        const response = await fetch(url);
+        const listTweets = await response.json();
+        const tweets = listTweets.data;
+        const users = listTweets.includes.users;
+        return { list, tweets, users };
+    }
+)
 
 const initialState = {
     posts: [],
@@ -13,11 +25,20 @@ const tweetsSlice = createSlice({
     name: 'tweets',
     initialState,
     reducers: {
-        startGetPosts: (state) => {
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload;
+        },
+        setSelectedList: (state, action) => {
+            state.selectedList = action.payload;
+            state.searchTerm = '';
+        },
+    },
+    extraReducers: {
+        [fetchPosts.pending]: (state, action) => {
             state.isLoading = true;
             state.error = false;
         },
-        getPostsSuccess: (state, action) => {
+        [fetchPosts.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.error = false;
 
@@ -34,52 +55,20 @@ const tweetsSlice = createSlice({
             Object.defineProperties(
                 state.posts, action.payload.list, posts
             );
-            
         },
-        getPostsFailed: (state) => {
-            state.isLoading = false;
+        [fetchPosts.rejected]: (state, action) => {
             state.error = true;
-        },
-        // SEARCH TERM
-        setSearchTerm: (state, action) => {
-            state.searchTerm = action.payload;
-        },
-        setSelectedList: (state, action) => {
-            state.selectedList = action.payload;
-            state.searchTerm = '';
+            state.isLoading = false;
         },
     }
 })
 
 export const {
-    startGetPosts,
-    getPostsSuccess,
-    getPostsFailed,
     setSearchTerm,
     setSelectedList,
 } = tweetsSlice.actions;
 
 export default tweetsSlice.reducer;
-
-
-export const fetchPosts = (list) => async (dispatch) => {
-    const url = `/netlify/functions/getListTweets?listId=${list.id}`;
-
-    try {
-        dispatch(startGetPosts());
-        const listTweets = await fetch(url)
-        .then(res => {
-            // converts into string, then to js object (problems with \n character)
-            return JSON.parse(JSON.stringify(res));
-        });
-        
-        const tweets = listTweets.data;
-        const users = listTweets.includes.users;
-        dispatch(getPostsSuccess(list, tweets, users));
-    } catch (err) {
-        dispatch(getPostsFailed())
-    }
-}
 
 export const selectSelectedList = (state) => state.tweets.selectedList;
 const selectListPosts = (state) => state.tweets.posts;

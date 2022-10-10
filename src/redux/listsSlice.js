@@ -1,4 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+export const fetchLists = createAsyncThunk(
+    'lists/fetchLists',	
+    async () => {
+        const url = `/.netlify/functions/listsByUserId`;
+        const response = await fetch(url);
+        console.dir(response, { depth: null });
+        const lists = await response.json();
+        console.dir(lists, { depth: null });
+        return lists.data;
+    }
+)
 
 const initialState = {
     lists: [],
@@ -10,43 +22,24 @@ const initialState = {
 const listsSlice = createSlice({
     name: 'lists',
     initialState,
-    reducers: {
-        startGetLists(state) {
-            state.error = false;
+    extraReducers: {
+        [fetchLists.pending]: (state, action) => {
             state.isLoading = true;
-        },
-        getListsSuccess(state, action) {
             state.error = false;
-            state.isLoading = false;
-            state.lists = action.payload
         },
-        getListsFailed(state) {
+        [fetchLists.fulfilled]: (state, action) => {
+            state.lists = action.payload;
+            state.isLoading = false;
+            state.error = false;
+        },
+        [fetchLists.rejected]: (state, action) => {
             state.error = true;
+            console.dir(action, { depth: null });
             state.isLoading = false;
         },
-    },
+    }
 });
 
-
-export const {
-    startGetLists,
-    getListsSuccess,
-    getListsFailed,
-} = listsSlice.actions;
-
 export default listsSlice.reducer;
-
-// This is a Redux Thunk that gets lists from a user.
-export const fetchLists = () => async (dispatch) => {
-    const url = `/netlify/functions/listsByUserId`;
-    
-    try {
-        dispatch(startGetLists());
-        const lists = await fetch(url).then((res) => res.json());
-        dispatch(getListsSuccess(lists.data));
-    } catch (err) {
-        dispatch(getListsFailed());
-    }
-}  
 
 export const selectLists = (state) => state.lists.lists;

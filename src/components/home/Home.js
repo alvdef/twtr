@@ -10,6 +10,7 @@ import {
     selectFilteredPosts,
     setSearchTerm
 } from '../../redux/tweetsSlice'
+import { selectLists } from '../../redux/listsSlice';
 
 
 const Home = () => {

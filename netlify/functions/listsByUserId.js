@@ -1,11 +1,11 @@
+const fetch = require('node-fetch')
 
 exports.handler = async function (event, context) {
     console.log(event);
-    console.lot(context);
+    console.log(context);
     
-    const userId = '1566757431413293057';
     const token = process.env.bearer_token;
-    const endpointURL = `https://api.twitter.com/2/users/${userId}/owned_lists`;
+    const endpointURL = `https://api.twitter.com/2/users/1566757431413293057/owned_lists`;
     
     try {
         const res = await fetch(endpointURL, {

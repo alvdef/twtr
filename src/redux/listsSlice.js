@@ -8,6 +8,7 @@ export const fetchLists = createAsyncThunk(
         console.dir(response, { depth: null });
         const lists = await response.json();
         console.dir(lists, { depth: null });
+        
         return lists.data;
     }
 )

@@ -6,8 +6,10 @@ export const fetchPosts = createAsyncThunk(
         const url = `/.netlify/functions/getListTweets?listId=${list.id}`;
         const response = await fetch(url);
         const listTweets = await response.json();
+        console.dir(listTweets, { depth: null });
         const tweets = listTweets.data;
         const users = listTweets.includes.users;
+
         return { list, tweets, users };
     }
 )
@@ -17,7 +19,7 @@ const initialState = {
     error: false,
     isLoading: false,
     searchTerm: '',
-    selectedList: '1566842355059154945',
+    selectedList: '',
 };
 
 
@@ -41,6 +43,7 @@ const tweetsSlice = createSlice({
         [fetchPosts.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.error = false;
+            console.dir(action, { depth: null });
 
             // posts contains the tweet object including a property "user"
             const posts = action.payload.tweets.forEach(tweet => {

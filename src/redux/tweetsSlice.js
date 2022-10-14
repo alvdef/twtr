@@ -3,12 +3,11 @@ import { createSlice, createSelector, createAsyncThunk } from '@reduxjs/toolkit'
 export const fetchPosts = createAsyncThunk(
     'tweets/fetchPosts',
     async (list) => {
-        const url = `/.netlify/functions/getListTweets?listId=${list.id}`;
-        const response = await fetch(url);
+        const response = await fetch(`/.netlify/functions/getListTweets?listId=${list.id}`);
         const listTweets = await response.json();
-        console.dir(listTweets, { depth: null });
-        const tweets = listTweets.data;
-        const users = listTweets.includes.users;
+
+        const tweets = listTweets.body.data;
+        const users = listTweets.body.includes.users;
 
         return { list, tweets, users };
     }

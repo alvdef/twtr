@@ -3,13 +3,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const fetchLists = createAsyncThunk(
     'lists/fetchLists',	
     async () => {
-        const url = `/.netlify/functions/listsByUserId`;
-        const response = await fetch(url);
-        console.dir(response, { depth: null });
+        const response = await fetch(`/.netlify/functions/listsByUserId`);
         const lists = await response.json();
-        console.dir(lists, { depth: null });
-        
-        return lists.data;
+
+        return lists.body.data;
     }
 )
 

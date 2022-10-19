@@ -1,5 +1,4 @@
 import { createSlice, createSelector, createAsyncThunk } from '@reduxjs/toolkit';
-import { post } from 'needle';
 import { parseTweet } from '../utils/parseTweet';
 
 export const fetchPosts = createAsyncThunk(

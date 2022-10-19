@@ -59,7 +59,7 @@ const Navbar = () => {
                     aria-label='Search tweets'
                 />
                 <span onClick={onSearchTermSubmit} aria-label='Search' >
-                         <AiOutlineSearch />
+                         <AiOutlineSearch size={25} />
                 </span>
             </form>
         </nav>

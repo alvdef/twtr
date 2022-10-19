@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaSpinner } from 'react-icons/fa';
 import Row from 'react-bootstrap/Row'
-import Container from 'react-bootstrap/Container'
+import './Home.css';
 
 import Post from '../post/Post'
 import { 
@@ -59,7 +59,7 @@ const Home = () => {
     else {
         console.log(posts);
         return (
-            <Container fluid="sm">
+            <div className='posts-container'>
                 {posts.map((tweet, index) => 
                     <Row >
                         <Post 
@@ -68,7 +68,7 @@ const Home = () => {
                         />
                     </Row>
                 )}
-            </Container>
+            </div>
         )
     }
 }

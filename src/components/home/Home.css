@@ -1,30 +1,36 @@
 .loading {
-    animation: spin infinite 5s linear;
+  animation: spin infinite 5s linear;
+  margin: 10px
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+}
+
+.posts-container {
+  width: 100%;
+  max-width: 1000px;
 }
 
 .error {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-  
+
 .error button {
-    color: var(--color-text-invert);
-    background: var(--color-branding);
-    border: none;
-    border-radius: var(--radius);
-    font-size: 1rem;
-    padding: var(--spacing-2) var(--spacing-4);
-    cursor: pointer;
+  color: var(--color-text-invert);
+  background: var(--color-branding);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  padding: var(--spacing-2) var(--spacing-4);
+  cursor: pointer;
 }
-  

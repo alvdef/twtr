@@ -1,4 +1,6 @@
 import { createSlice, createSelector, createAsyncThunk } from '@reduxjs/toolkit';
+import { post } from 'needle';
+import { parseTweet } from '../utils/parseTweet';
 
 export const fetchPosts = createAsyncThunk(
     'tweets/fetchPosts',
@@ -54,7 +56,7 @@ const tweetsSlice = createSlice({
                 );
                 Object.assign(tweet, {user: userObj});
                 console.dir(tweet);
-
+                tweet = parseTweet(tweet);
                 return tweet;
             });
             console.dir(action.payload.tweets, { depth: null });
@@ -82,9 +84,9 @@ export const selectFilteredPosts = createSelector(
     [selectListPosts, selectSearchTerm],
     (posts, searchTerm) => {
         // if (searchTerm !== '') {
-        //     return posts.filter((post) =>
-        //         post.text.toLowerCase().includes(searchTerm.toLowerCase())
-        //   ); 
+        //     return posts.filter(post => 
+        //         post.text.includes(searchTerm)
+        //     )
         // }
         return posts;
     }

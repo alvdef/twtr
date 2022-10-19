@@ -1,5 +1,9 @@
 import React from "react";
 import { DateTime } from "luxon";
+import Linkify from "linkify-react";
+import "linkify-plugin-hashtag";
+import "linkify-plugin-mention";
+
 import { AiOutlineTwitter } from 'react-icons/ai';
 
 import './Post.css'
@@ -7,8 +11,14 @@ import './Post.css'
 const Post = ({ tweet }) => {
 
     const date = DateTime.fromISO(tweet.created_at).toFormat('ff');
-    const tweetURL = `https://twitter.com/${tweet.user.username}/status/${tweet.tweet_id}`;
+    const tweetURL = `https://twitter.com/${tweet.user.username}/status/${tweet.id}`;
 
+    const options = {
+        formatHref: {
+            hashtag: (val) => `https://twitter.com/hashtag/${val.substring(1)}`,
+            mention: (val) => `https://twitter.com/${val.substring(1)}`,
+        }
+    };
 
     return (
         <div className="post-wrapper">
@@ -20,9 +30,10 @@ const Post = ({ tweet }) => {
                 <p id='created_at' >{ date }</p>
             </div>
             
-            <div className="post-body">
-                <p>{tweet.text}</p>
-                {/* {media ? <img>} */}
+            <div className="post-body">.
+                <Linkify options={options}>
+                    { tweet.text }
+                </Linkify>
             </div>
         </div>
     )

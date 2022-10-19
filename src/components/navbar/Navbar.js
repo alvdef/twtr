@@ -26,6 +26,7 @@ const Navbar = () => {
 
     useEffect(() => {
         dispatch(fetchLists());
+        // dispatch(setSelectedList(lists[0]));
     }, [dispatch])
 
     const onSearchTermChange = (e) => {
@@ -86,7 +87,7 @@ const ListsSidebar = ({ lists, selectedList, setSelectedList, dispatch }) => {
                     <li 
                         key={index}
                         className={list === selectedList ? 'sidenav-item text active' : 'sidenav-item text'}
-                        onClick={() => dispatch(setSelectedList(parseInt(list.id)))}
+                        onClick={() => dispatch(setSelectedList(list))}
                     >
                         <span >
                             {list.name}

@@ -1,12 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+// 0
+// : 
+// id
+// : 
+// "1566842355059154945"
+// name
+// : 
+// "Tecnologia"
+// [[Prototype]]
+// : 
+// Object
+// 1
+// : 
+// id
+// : 
+// "1566842155594833922"
+// name
+// : 
+// "Deportes"
+
 export const fetchLists = createAsyncThunk(
     'lists/fetchLists',	
     async () => {
         const response = await fetch(`/.netlify/functions/listsByUserId`);
-        const lists = await response.json();
+        const data = await response.json();
 
-        return lists.body.data;
+        console.dir(data);
+        return data.data;
     }
 )
 
@@ -15,7 +36,6 @@ const initialState = {
     error: false,
     isLoading: false,
 };
-
 
 const listsSlice = createSlice({
     name: 'lists',
@@ -26,13 +46,14 @@ const listsSlice = createSlice({
             state.error = false;
         },
         [fetchLists.fulfilled]: (state, action) => {
+            console.log(action.payload);
+            
             state.lists = action.payload;
             state.isLoading = false;
             state.error = false;
         },
         [fetchLists.rejected]: (state, action) => {
             state.error = true;
-            console.dir(action, { depth: null });
             state.isLoading = false;
         },
     }

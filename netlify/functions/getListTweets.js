@@ -1,32 +1,40 @@
-const fetch = require('node-fetch')
+const needle = require('needle')
+
+async function getRequest (listId) {
+    
+    const token = process.env.bearer_token;
+    const endpointURL = `https://api.twitter.com/2/lists/${listId}/tweets?`;
+    const params = {
+        'tweet.fields': 'author_id,created_at,id,in_reply_to_user_id,text',
+        'expansions': 'author_id',
+        'user.fields': 'created_at,id,name,username',
+    };
+
+    const res = await needle("get", endpointURL, params, {
+        headers: {
+            authorization: `Bearer ${token}`,
+        },
+    });
+    
+    if (res.body) {
+        return res.body;
+    }
+    else {
+        throw new Error("Unsuccessful request");
+    }
+}
+
 
 exports.handler = async function (event, context) {
-    console.log(event);
-    console.log(context);
-    
+
     const { listId } = event.queryStringParameters;
-    const token = process.env.bearer_token;
-    const endpointURL = `https://api.twitter.com/2/lists/1566842355059154945/tweets?`;
 
     try {
-        const res = await fetch(endpointURL, {
-            method: 'GET',
-            params: {
-                'tweet.fields': 'author_id,created_at,id,in_reply_to_user_id,text',
-                'expansions': 'author_id',
-                'user.fields': 'created_at,id,name,username',
-            },
-            headers: {
-                authorization: `Bearer ${token}`,
-            }
-        });
-        console.log(res);
-
+        const response = await getRequest(listId);
         return {
             statusCode: 200,
-            body: res,
+            body: JSON.stringify(response),
         }
-        
     } catch (error) {
         console.log('Error: ');
         console.log(error);

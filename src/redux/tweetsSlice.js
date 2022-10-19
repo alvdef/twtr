@@ -3,11 +3,11 @@ import { createSlice, createSelector, createAsyncThunk } from '@reduxjs/toolkit'
 export const fetchPosts = createAsyncThunk(
     'tweets/fetchPosts',
     async (list) => {
-        const response = await fetch(`/.netlify/functions/getListTweets?listId=${list.id}`);
-        const listTweets = await response.json();
+        let response = await fetch(`/.netlify/functions/getListTweets?listId=${list.id}`);
+        response = await response.json()
 
-        const tweets = listTweets.body.data;
-        const users = listTweets.body.includes.users;
+        const tweets = response.data;
+        const users = response.includes.users;
 
         return { list, tweets, users };
     }
@@ -18,9 +18,11 @@ const initialState = {
     error: false,
     isLoading: false,
     searchTerm: '',
-    selectedList: '',
+    selectedList: {
+        id:"1566842355059154945",
+        name:"Tecnologia"
+    },
 };
-
 
 const tweetsSlice = createSlice({
     name: 'tweets',
@@ -42,21 +44,21 @@ const tweetsSlice = createSlice({
         [fetchPosts.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.error = false;
-            console.dir(action, { depth: null });
-
+            console.dir(action.payload, { depth: null });
+            
             // posts contains the tweet object including a property "user"
-            const posts = action.payload.tweets.forEach(tweet => {
+            action.payload.tweets.forEach(tweet => {
                 // search the user that published "tweet"
-                const user = action.payload.users.find(
+                const userObj = action.payload.users.find(
                     user => user.id === tweet.author_id
                 );
-                Object.defineProperty(tweet, 'user', user);
+                Object.assign(tweet, {user: userObj});
+                console.dir(tweet);
+
                 return tweet;
             });
-            // posts
-            Object.defineProperties(
-                state.posts, action.payload.list, posts
-            );
+            console.dir(action.payload.tweets, { depth: null });
+            state.posts = action.payload.tweets;
         },
         [fetchPosts.rejected]: (state, action) => {
             state.error = true;
@@ -79,11 +81,11 @@ const selectSearchTerm = (state) => state.searchTerm;
 export const selectFilteredPosts = createSelector(
     [selectListPosts, selectSearchTerm],
     (posts, searchTerm) => {
-        if (searchTerm !== '') {
-            return posts.filter((post) =>
-            post.text.toLowerCase().includes(searchTerm.toLowerCase())
-          ); 
-        }
+        // if (searchTerm !== '') {
+        //     return posts.filter((post) =>
+        //         post.text.toLowerCase().includes(searchTerm.toLowerCase())
+        //   ); 
+        // }
         return posts;
     }
 );
